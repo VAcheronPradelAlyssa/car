@@ -1,0 +1,79 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  color: #3498db;
+  margin-top: 20px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+button {
+  background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+  font-weight: 500;
+}
+button:hover {
+  background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+  box-shadow: 0 4px 16px rgba(52,152,219,0.15);
+}
+
+input {
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid #b2bec3;
+  margin-right: 8px;
+  width: 60%;
+  font-size: 1em;
+}
+
+.messages {
+  background: #fff;
+  border: 1px solid #dfe6e9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(52,152,219,0.07);
+}
+
+.messages b {
+  color: #2980b9;
+  font-weight: 600;
+}
+
+.messages div {
+  margin-bottom: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f1f2f6;
+}
+
+@media (max-width: 600px) {
+  input {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .messages {
+    padding: 8px;
+  }
+}

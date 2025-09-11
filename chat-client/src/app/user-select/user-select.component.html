@@ -1,0 +1,22 @@
+<h2>Choisissez un utilisateur ou un conseiller</h2>
+
+<h3>Utilisateurs</h3>
+<ul>
+  <li *ngFor="let user of users">
+    <button (click)="selectUser(user)">{{ user.username }}</button>
+  </li>
+</ul>
+
+<h3>Conseillers actifs</h3>
+<ul>
+  <li *ngFor="let advisor of advisors">
+    <button (click)="selectAdvisor(advisor)">{{ advisor.username }}</button>
+  </li>
+</ul>
+
+<h3>Conseillers non actifs</h3>
+<ul>
+  <li *ngFor="let advisor of nonActiveAdvisors">
+    <button (click)="selectAdvisor(advisor)">{{ advisor.username }} ({{ advisor.status }})</button>
+  </li>
+</ul>

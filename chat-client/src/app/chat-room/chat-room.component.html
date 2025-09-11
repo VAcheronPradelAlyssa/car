@@ -1,0 +1,20 @@
+<h2>Conversation</h2>
+<div>
+  <b>Utilisateur :</b> {{ user?.role.name === 'USER' ? user?.firstName : advisor?.firstName }}<br>
+  <b>Conseiller :</b> {{ user?.role.name === 'USER' ? advisor?.firstName : user?.firstName }}
+</div>
+<div class="messages">
+  <div *ngFor="let msg of messages" class="message-row">
+    <span>
+      <b>{{ getSenderName(msg.sender) }}:</b> {{ msg.content }}
+    </span>
+    <span class="msg-date">
+      {{ msg.timestamp | date:'HH:mm' }}<span *ngIf="isToday(msg.timestamp)"> aujourd'hui</span>
+      <span *ngIf="!isToday(msg.timestamp)">{{ msg.timestamp | date:'dd/MM/yyyy' }}</span>
+    </span>
+  </div>
+</div>
+<input [(ngModel)]="newMessage" placeholder="Votre message..." />
+<button (click)="sendMessage()">Envoyer</button>
+<br>
+<button (click)="backToList()">Retour à la liste des chats</button>
