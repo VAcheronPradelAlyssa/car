@@ -4,8 +4,12 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface ChatMessage {
   content: string;
-  sender: string;
-  receiver: string;
+  sender?: string;
+  receiver?: string;
+  senderUser?: any;
+  senderCustomerService?: any;
+  receiverUser?: any;
+  receiverCustomerService?: any;
   chatSessionId?: number;
   timestamp?: string;
 }

@@ -1,10 +1,9 @@
-<h2>Liste des conversations</h2>
+
+<h2>Liste des conversations <span style="color:#0984e3; font-weight:normal; font-size:1em;">({{ user?.firstName }})</span></h2>
 <ul>
   <li *ngFor="let chat of chats">
     <button (click)="openChat(chat)">
-      Chat avec {{
-        user.role.name === 'ADVISOR' ? chat.client?.username : chat.advisor?.username
-      }}
+  Chat avec {{ user?.username === chat.advisor?.username ? chat.client?.username : chat.advisor?.username }}
     </button>
     <span style="margin-left:10px; color:#636e72; font-size:0.95em;">
       Démarrée le {{ chat.startedAt | date:'dd/MM/yyyy à HH:mm' }}
@@ -12,14 +11,20 @@
   </li>
 </ul>
 
-<div *ngIf="user.role.name === 'USER'">
+
+<div *ngIf="user && !user.isAdvisor">
   <h3>Conseillers actifs disponibles</h3>
-  <ul>
+  <ul *ngIf="advisors.length > 0; else noAdvisor">
     <li *ngFor="let advisor of advisors">
-      {{ advisor.username }}
-      <button (click)="createChatWithAdvisor(advisor)">Contacter ce conseiller</button>
+      <ng-container *ngIf="advisor.status === 'ACTIVE'">
+        <b>{{ advisor.firstName }} {{ advisor.lastName }}</b>
+        <button (click)="createChatWithAdvisor(advisor)">Contacter ce conseiller</button>
+      </ng-container>
     </li>
   </ul>
+  <ng-template #noAdvisor>
+    <p style="color:#636e72;">Aucun conseiller actif disponible pour le moment.</p>
+  </ng-template>
 </div>
 
 <button (click)="logout()">Déconnexion</button>

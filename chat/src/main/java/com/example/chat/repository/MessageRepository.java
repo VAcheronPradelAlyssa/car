@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findByChatSessionId(Long chatSessionId);
-    List<Message> findBySenderId(Long senderId);
-    List<Message> findByReceiverId(Long receiverId);
     List<Message> findByChatSession_Id(Long chatSessionId);
+
+    List<Message> findBySenderUser_Id(Long senderUserId);
+    List<Message> findBySenderCustomerService_Id(Long senderCustomerServiceId);
+    List<Message> findByReceiverUser_Id(Long receiverUserId);
+    List<Message> findByReceiverCustomerService_Id(Long receiverCustomerServiceId);
 }

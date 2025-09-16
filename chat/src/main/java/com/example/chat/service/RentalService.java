@@ -21,7 +21,7 @@ public class RentalService {
     }
 
     public List<Rental> getRentalsByUser(Long userId) {
-        return rentalRepository.findByUserId(userId);
+        return rentalRepository.findByClient_Id(userId);
     }
 
     public List<Rental> getRentalsByCar(Long carId) {

@@ -32,9 +32,6 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public List<User> getActiveAdvisors() {
-        return userRepository.findByRole_NameAndStatus("ADVISOR", "ACTIVE");
-    }
 
     public User updateUserStatus(Long userId, String status) {
         User user = userRepository.findById(userId).orElse(null);

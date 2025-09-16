@@ -18,6 +18,7 @@ export class ChatRoomComponent implements OnInit {
   chatSessionId!: number;
   user: any;
   advisor: any;
+  client: any;
   newMessage: string = '';
 
   constructor(
@@ -28,10 +29,28 @@ export class ChatRoomComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    // On récupère soit un user, soit un customer service (conseiller)
+    const userRaw = localStorage.getItem('user');
+    const advisorRaw = localStorage.getItem('advisor');
+    if (advisorRaw) {
+      this.user = JSON.parse(advisorRaw);
+      this.user.isAdvisor = true;
+    } else if (userRaw) {
+      this.user = JSON.parse(userRaw);
+      this.user.isAdvisor = false;
+    } else {
+      this.user = {};
+      this.user.isAdvisor = false;
+    }
     this.chatSessionId = Number(this.route.snapshot.paramMap.get('id'));
     this.http.get<any>(`/api/chatsessions/${this.chatSessionId}`).subscribe(chat => {
-      this.advisor = this.user.role.name === 'USER' ? chat.advisor : chat.client;
+      if (this.user.isAdvisor) {
+        this.advisor = this.user;
+        this.client = chat.client;
+      } else {
+        this.advisor = chat.advisor;
+        this.client = this.user;
+      }
     });
     this.http.get<ChatMessage[]>(`/api/messages?chatSessionId=${this.chatSessionId}`).subscribe(data => {
       this.messages = data;
@@ -44,23 +63,31 @@ export class ChatRoomComponent implements OnInit {
   }
 
   sendMessage() {
-    const msg: ChatMessage = {
+    let msg: any = {
       content: this.newMessage,
-      sender: this.user.username,
-      receiver: this.advisor?.username,
       chatSessionId: this.chatSessionId
     };
+    if (this.user.isAdvisor) {
+      msg.senderCustomerService = this.user;
+      msg.receiverUser = this.client;
+    } else {
+      msg.senderUser = this.user;
+      msg.receiverCustomerService = this.advisor;
+    }
     this.chatSocket.sendMessage(msg);
     this.newMessage = '';
+  }
+  getSenderName(sender: any): string {
+    if (typeof sender === 'object' && sender !== null) {
+      return sender.firstName || sender.username || '[inconnu]';
+    }
+    return sender;
   }
 
   backToList() {
     this.router.navigate(['/chats']);
   }
 
-  getSenderName(sender: any): string {
-    return typeof sender === 'string' ? sender : sender.firstName;
-  }
 
   isToday(date: string | undefined): boolean {
     if (!date) return false;

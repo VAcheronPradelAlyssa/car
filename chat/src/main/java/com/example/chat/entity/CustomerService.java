@@ -1,16 +1,16 @@
 package com.example.chat.entity;
 
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "CUSTOMER_SERVICE")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class CustomerService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,23 +34,19 @@ public class User {
     private String status;
 
     // Relations
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "advisor")
     @JsonIgnore
     private List<Appointment> appointments;
 
-    @OneToMany(mappedBy = "client")
-    @JsonIgnore
-    private List<Rental> rentals;
-
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "advisor")
     @JsonIgnore
     private List<ChatSession> chatSessions;
 
-    @OneToMany(mappedBy = "senderUser")
-    @JsonIgnore
-    private List<Message> sentMessages;
-
-    @OneToMany(mappedBy = "receiverUser")
+    @OneToMany(mappedBy = "receiverCustomerService")
     @JsonIgnore
     private List<Message> receivedMessages;
+
+    @OneToMany(mappedBy = "senderCustomerService")
+    @JsonIgnore
+    private List<Message> sentMessages;
 }

@@ -1,12 +1,12 @@
 package com.example.chat.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "CHATSESSION")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,14 +15,17 @@ public class ChatSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+
     @ManyToOne
     @JoinColumn(name = "advisor_id")
-    private User advisor;
-    private LocalDateTime startedAt;
-    private LocalDateTime endedAt;
+    private CustomerService advisor;
+
+    private java.time.LocalDateTime startedAt;
+
     @OneToMany(mappedBy = "chatSession")
     @JsonIgnore
     private List<Message> messages;

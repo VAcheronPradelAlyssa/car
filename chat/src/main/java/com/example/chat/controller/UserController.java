@@ -39,11 +39,6 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @GetMapping("/active-advisors")
-    public List<User> getActiveAdvisors() {
-        return userService.getActiveAdvisors();
-    }
-
     @PutMapping("/{id}/status")
     public User updateUserStatus(@PathVariable Long id, @RequestParam String status) {
         return userService.updateUserStatus(id, status);

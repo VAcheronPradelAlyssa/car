@@ -15,5 +15,6 @@
             "username": "car",
             "askForPassword": true
         }
-    ]
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
 }
